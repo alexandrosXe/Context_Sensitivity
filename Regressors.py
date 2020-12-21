@@ -9,7 +9,7 @@ Original file is located at
 Imports
 """
 
-!pip install -r requirements.txt
+#!pip install -r requirements.txt
 
 import tensorflow.keras as keras
 from tensorflow.keras.callbacks import EarlyStopping
