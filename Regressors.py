@@ -252,10 +252,10 @@ class BERT_MLP():
                        class_weight=None 
                        )
 
-    def predict(self, val_pd):
+    def predict(self, val_pd, batch_size = None):
         #with self.session.as_default():
         val_input, val_targets = self.to_bert_input(val_pd)
-        predictions = self.model.predict(val_input)
+        predictions = self.model.predict(val_input, batch_size = batch_size)
         print('Stopped epoch: ', self.earlystop.stopped_epoch)
         if self.save_predictions:
             self.save_evaluation_set(val_targets, predictions)
@@ -401,7 +401,7 @@ class CA_BERT_MLP():
                        class_weight=None 
                        )
 
-    def predict(self, val_pd):
+    def predict(self, val_pd, batch_size=None):
         #with self.session.as_default():
 
         #encode parent 
@@ -410,7 +410,7 @@ class CA_BERT_MLP():
         #encode target
         val_input, val_targets = self.to_bert_input(val_pd, text_to_encode="text")
 
-        predictions = self.model.predict(parent_val_input + val_input)
+        predictions = self.model.predict(parent_val_input + val_input, batch_size = batch_size)
         print('Stopped epoch: ', self.earlystop.stopped_epoch)
         if self.save_predictions:
             self.save_evaluation_set(val_targets, predictions)
