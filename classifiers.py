@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1lQZ3qpKrAhLJminj7PYw15v8Fch2fA4a
 """
 
-!pip install -r requirements.txt
+
 
 import tensorflow.keras as keras
 from tensorflow.keras.callbacks import EarlyStopping
