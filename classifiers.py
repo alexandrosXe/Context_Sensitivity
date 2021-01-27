@@ -43,15 +43,6 @@ METRICS = [
       keras.metrics.AUC(curve = 'PR',name='auc'),
 ]
 
-def load_embeddings_index():
-    embeddings_index = dict()
-    with open('embeddings/glove.6B.100d.txt', 'r') as glove_in:
-        for line in glove_in.readlines():
-            values = line.split()
-            word = values[0]
-            coefs = np.asarray(values[1:], dtype='float32')
-            embeddings_index[word] = coefs
-    return embeddings_index
 
 class BERT(tf.keras.layers.Layer):
     """
