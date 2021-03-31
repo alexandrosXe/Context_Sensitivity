@@ -5,6 +5,8 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from tokenizers import BertWordPieceTokenizer
 from transformers import BertTokenizer, TFBertModel, BertConfig
+from tqdm import tqdm
+
 
 METRICS = [
       keras.metrics.MeanSquaredError(name="MSE"),
