@@ -90,7 +90,7 @@ class BERT_MLP():
       
 
 
-  def Unfreeze_last_k_layers(self,k=3):
+  def unfreeze_last_k_layers(self,k=3):
     counter = 0
     for layer in self.BERT.layers:
       for l in layer.encoder.layer:
@@ -102,7 +102,7 @@ class BERT_MLP():
 
   def build(self, bias=0):
         #unfreeze last 3 layers of bert
-        self.Unfreeze_last_k_layers(3) 
+        self.unfreeze_last_k_layers(3) 
 
         #take the 'CLS' token of the target
         in_id = tf.keras.layers.Input(shape=(self.max_seq_length,), name="input_ids", dtype='int32')
@@ -156,8 +156,11 @@ class BERT_MLP():
             self.save_evaluation_set(val_targets, predictions)
         return predictions
 
-  def save(self):
-      self.model.save('BERT')
+  def save_weights(self, path):
+    self.model.save_weights(path)
+
+  def load_weights(self, path):
+    self.model.load_weights(path)
         
         
  #A Bert model encodes the parent post
@@ -221,7 +224,7 @@ class PcT_BERT():
           
       return (np.asarray(input_ids, dtype='int32'), np.asarray(input_masks, dtype='int32'), np.asarray(input_segments, dtype='int32'))
 
-  def Unfreeze_last_k_layers(self, bert,k=3):
+  def unfreeze_last_k_layers(self, bert,k=3):
     counter = 0
     #print(len(self.BERT.trainable_layers),'layersss')
     for layer in bert.layers:
@@ -233,8 +236,8 @@ class PcT_BERT():
           l.trainable = False
 
   def build(self, bias=0):
-        self.Unfreeze_last_k_layers(self.BERT_parent,3)
-        self.Unfreeze_last_k_layers(self.BERT_target,3) 
+        self.unfreeze_last_k_layers(self.BERT_parent,3)
+        self.unfreeze_last_k_layers(self.BERT_target,3) 
  
 
         #take the 'CLS' token of the parent 
@@ -311,8 +314,11 @@ class PcT_BERT():
             self.save_evaluation_set(val_targets, predictions)
         return predictions
 
-  def save(self):
-        self.model.save('PcT_BERT')
+  def save_weights(self, path):
+    self.model.save_weights(path)
+
+  def load_weights(self, path):
+    self.model.load_weights(path)
     
   
 
