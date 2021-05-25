@@ -62,10 +62,10 @@ class BERT_MLP():
         self.patience=patience
         self.save_predictions = save_predictions
         self.epochs = epochs
+        self.METRICS = METRICS
         self.loss = loss
         self.monitor_loss = monitor_loss
         self.monitor_mode = monitor_mode
-        self.METRICS = METRICS
         self.dense_activation = dense_activation
         self.earlystop = tf.keras.callbacks.EarlyStopping(monitor='self.monitor_loss',
                                                             patience=self.patience,
@@ -218,11 +218,11 @@ class PcT_BERT():
         self.patience=patience
         self.save_predictions = save_predictions
         self.epochs = epochs
+        self.METRICS = METRICS
         self.loss = loss
         self.monitor_loss = monitor_loss
         self.monitor_mode = monitor_mode
         self.dense_activation = dense_activation
-        self.METRICS = METRICS
         self.earlystop = tf.keras.callbacks.EarlyStopping(monitor=self.monitor_loss,
                                                             patience=self.patience,
                                                             verbose=1,
