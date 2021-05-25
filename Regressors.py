@@ -33,7 +33,7 @@ class BERT_MLP():
                  session=None,
                  dense_activation = None,
                  loss='MSE',
-                 monitor_loss = loss,
+                 monitor_loss = 'val_mse',
                  monitor_mode = 'min'
                  ):
         self.bert_config = bert_config
@@ -187,7 +187,7 @@ class PcT_BERT():
                session=None,
                dense_activation = None,
                loss='MSE',
-               monitor_loss = loss,
+               monitor_loss = 'val_mse',
                monitor_mode = 'min'
                
                ):
