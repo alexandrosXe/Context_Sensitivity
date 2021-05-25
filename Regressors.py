@@ -31,6 +31,7 @@ class BERT_MLP():
                  DATA2_COLUMN=None,
                  lr=2e-05,
                  session=None,
+                 dense_activation = None,
                  loss='MSE'
                  ):
         self.bert_config = bert_config
@@ -116,7 +117,7 @@ class BERT_MLP():
         #x = tf.keras.layers.BatchNormalization()(x)
         x = tf.keras.layers.Dense(128, activation='tanh')(bert_output)
         #x = tf.keras.layers.Dropout(0.1)(x)
-        pred = tf.keras.layers.Dense(1, activation=None, bias_initializer=tf.keras.initializers.Constant(bias))(x)
+        pred = tf.keras.layers.Dense(1, activation=dense_activation, bias_initializer=tf.keras.initializers.Constant(bias))(x)
         self.model = tf.keras.models.Model(inputs=bert_inputs, outputs=pred)
         self.model.compile(loss=self.loss,
                       optimizer=tf.keras.optimizers.Adam(learning_rate=self.lr),
@@ -179,6 +180,7 @@ class PcT_BERT():
                DATA2_COLUMN=None,
                lr=2e-05,
                session=None,
+               dense_activation = None,
                loss='MSE'
                ):
         self.bert_config = bert_config
@@ -267,7 +269,7 @@ class PcT_BERT():
         #x = tf.keras.layers.BatchNormalization()(x)
         x = tf.keras.layers.Dense(128, activation='tanh')(x)
         #x = tf.keras.layers.Dropout(0.1)(x)
-        pred = tf.keras.layers.Dense(1, activation=None, bias_initializer=tf.keras.initializers.Constant(bias))(x)
+        pred = tf.keras.layers.Dense(1, activation=dense_activation, bias_initializer=tf.keras.initializers.Constant(bias))(x)
         self.model = tf.keras.models.Model(inputs=bert_parent_inputs + bert_inputs, outputs=pred)
         self.model.compile(loss=self.loss,
                       optimizer=tf.keras.optimizers.Adam(learning_rate=self.lr),
