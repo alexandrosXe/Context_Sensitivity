@@ -32,7 +32,9 @@ class BERT_MLP():
                  lr=2e-05,
                  session=None,
                  dense_activation = None,
-                 loss='MSE'
+                 loss='MSE',
+                 monitor_loss = loss,
+                 monitor_mode = 'min'
                  ):
         self.bert_config = bert_config
         self.session = session
@@ -55,12 +57,14 @@ class BERT_MLP():
         self.save_predictions = save_predictions
         self.epochs = epochs
         self.loss = loss
+        self.monitor_loss = monitor_loss
+        self.monitor_mode = monitor_mode
         self.dense_activation = dense_activation
-        self.earlystop = tf.keras.callbacks.EarlyStopping(monitor='val_MSE',
+        self.earlystop = tf.keras.callbacks.EarlyStopping(monitor='self.monitor_loss',
                                                             patience=self.patience,
                                                             verbose=1,
                                                             restore_best_weights=True,
-                                                            mode="min")
+                                                            mode=self.monitor_mode)
         self.BERT = TFBertModel.from_pretrained("bert-base-cased", output_attentions = True) #, config=self.bert_config)
         
   #prepare inputs for bert 
@@ -182,7 +186,10 @@ class PcT_BERT():
                lr=2e-05,
                session=None,
                dense_activation = None,
-               loss='MSE'
+               loss='MSE',
+               monitor_loss = loss,
+               monitor_mode = 'min'
+               
                ):
         self.bert_config = bert_config
         self.session = session
@@ -200,12 +207,14 @@ class PcT_BERT():
         self.save_predictions = save_predictions
         self.epochs = epochs
         self.loss = loss
+        self.monitor_loss = monitor_loss
+        self.monitor_mode = monitor_mode
         self.dense_activation = dense_activation
-        self.earlystop = tf.keras.callbacks.EarlyStopping(monitor='val_MSE',
+        self.earlystop = tf.keras.callbacks.EarlyStopping(monitor=self.monitor_loss,
                                                             patience=self.patience,
                                                             verbose=1,
                                                             restore_best_weights=True,
-                                                            mode="min")
+                                                            mode=self.monitor_mode)
         self.BERT_parent = TFBertModel.from_pretrained("bert-base-cased", output_attentions = True) #, config=self.bert_config)
         self.BERT_target = TFBertModel.from_pretrained("bert-base-cased", output_attentions = True)
         
