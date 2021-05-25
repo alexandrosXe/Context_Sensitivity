@@ -8,11 +8,11 @@ from transformers import BertTokenizer, TFBertModel, BertConfig
 from tqdm import tqdm
 
 
-METRICS = [
-      keras.metrics.MeanSquaredError(name="MSE"),
-      keras.metrics.MeanAbsoluteError(name="MAE"),
-      keras.metrics.MeanSquaredLogarithmicError(name="MSLE"),
-]
+# METRICS = [
+#       keras.metrics.MeanSquaredError(name="MSE"),
+#       keras.metrics.MeanAbsoluteError(name="MAE"),
+#       keras.metrics.MeanSquaredLogarithmicError(name="MSLE"),
+# ]
 
 
 class BERT_MLP():
@@ -34,7 +34,13 @@ class BERT_MLP():
                  dense_activation = None,
                  loss='MSE',
                  monitor_loss = 'val_mse',
-                 monitor_mode = 'min'
+                 monitor_mode = 'min',
+                 METRICS = [
+                        keras.metrics.MeanSquaredError(name="MSE"),
+                        keras.metrics.MeanAbsoluteError(name="MAE"),
+                        keras.metrics.MeanSquaredLogarithmicError(name="MSLE"),
+                  ]
+                 
                  ):
         self.bert_config = bert_config
         self.session = session
@@ -59,6 +65,7 @@ class BERT_MLP():
         self.loss = loss
         self.monitor_loss = monitor_loss
         self.monitor_mode = monitor_mode
+        self.METRICS = METRICS
         self.dense_activation = dense_activation
         self.earlystop = tf.keras.callbacks.EarlyStopping(monitor='self.monitor_loss',
                                                             patience=self.patience,
@@ -126,7 +133,7 @@ class BERT_MLP():
         self.model = tf.keras.models.Model(inputs=bert_inputs, outputs=pred)
         self.model.compile(loss=self.loss,
                       optimizer=tf.keras.optimizers.Adam(learning_rate=self.lr),
-                      metrics=METRICS)
+                      metrics=self.METRICS)
         if self.show_summary:
             self.model.summary()
 
@@ -188,7 +195,12 @@ class PcT_BERT():
                dense_activation = None,
                loss='MSE',
                monitor_loss = 'val_mse',
-               monitor_mode = 'min'
+               monitor_mode = 'min',
+               METRICS = [
+                        keras.metrics.MeanSquaredError(name="MSE"),
+                        keras.metrics.MeanAbsoluteError(name="MAE"),
+                        keras.metrics.MeanSquaredLogarithmicError(name="MSLE"),
+                  ]
                
                ):
         self.bert_config = bert_config
@@ -210,6 +222,7 @@ class PcT_BERT():
         self.monitor_loss = monitor_loss
         self.monitor_mode = monitor_mode
         self.dense_activation = dense_activation
+        self.METRICS = METRICS
         self.earlystop = tf.keras.callbacks.EarlyStopping(monitor=self.monitor_loss,
                                                             patience=self.patience,
                                                             verbose=1,
@@ -284,7 +297,7 @@ class PcT_BERT():
         self.model = tf.keras.models.Model(inputs=bert_parent_inputs + bert_inputs, outputs=pred)
         self.model.compile(loss=self.loss,
                       optimizer=tf.keras.optimizers.Adam(learning_rate=self.lr),
-                      metrics=METRICS)
+                      metrics=self.METRICS)
         if self.show_summary:
             self.model.summary()
 
