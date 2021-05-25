@@ -55,6 +55,7 @@ class BERT_MLP():
         self.save_predictions = save_predictions
         self.epochs = epochs
         self.loss = loss
+        self.dense_activation = dense_activation
         self.earlystop = tf.keras.callbacks.EarlyStopping(monitor='val_MSE',
                                                             patience=self.patience,
                                                             verbose=1,
@@ -117,7 +118,7 @@ class BERT_MLP():
         #x = tf.keras.layers.BatchNormalization()(x)
         x = tf.keras.layers.Dense(128, activation='tanh')(bert_output)
         #x = tf.keras.layers.Dropout(0.1)(x)
-        pred = tf.keras.layers.Dense(1, activation=dense_activation, bias_initializer=tf.keras.initializers.Constant(bias))(x)
+        pred = tf.keras.layers.Dense(1, activation=self.dense_activation, bias_initializer=tf.keras.initializers.Constant(bias))(x)
         self.model = tf.keras.models.Model(inputs=bert_inputs, outputs=pred)
         self.model.compile(loss=self.loss,
                       optimizer=tf.keras.optimizers.Adam(learning_rate=self.lr),
@@ -199,6 +200,7 @@ class PcT_BERT():
         self.save_predictions = save_predictions
         self.epochs = epochs
         self.loss = loss
+        self.dense_activation = dense_activation
         self.earlystop = tf.keras.callbacks.EarlyStopping(monitor='val_MSE',
                                                             patience=self.patience,
                                                             verbose=1,
@@ -269,7 +271,7 @@ class PcT_BERT():
         #x = tf.keras.layers.BatchNormalization()(x)
         x = tf.keras.layers.Dense(128, activation='tanh')(x)
         #x = tf.keras.layers.Dropout(0.1)(x)
-        pred = tf.keras.layers.Dense(1, activation=dense_activation, bias_initializer=tf.keras.initializers.Constant(bias))(x)
+        pred = tf.keras.layers.Dense(1, activation=self.dense_activation, bias_initializer=tf.keras.initializers.Constant(bias))(x)
         self.model = tf.keras.models.Model(inputs=bert_parent_inputs + bert_inputs, outputs=pred)
         self.model.compile(loss=self.loss,
                       optimizer=tf.keras.optimizers.Adam(learning_rate=self.lr),
