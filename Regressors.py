@@ -67,7 +67,7 @@ class BERT_MLP():
         self.monitor_loss = monitor_loss
         self.monitor_mode = monitor_mode
         self.dense_activation = dense_activation
-        self.earlystop = tf.keras.callbacks.EarlyStopping(monitor='self.monitor_loss',
+        self.earlystop = tf.keras.callbacks.EarlyStopping(monitor=self.monitor_loss,
                                                             patience=self.patience,
                                                             verbose=1,
                                                             restore_best_weights=True,
