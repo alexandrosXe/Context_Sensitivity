@@ -158,10 +158,10 @@ class BERT_MLP():
                        class_weight=None 
                        )
 
-  def predict(self, val_pd):
+  def predict(self, val_pd, text_to_encode = "text"):
 
         #encode target
-        val_input = self.to_bert_input(val_pd, text_to_encode="text")
+        val_input = self.to_bert_input(val_pd, text_to_encode=text_to_encode)
         predictions = self.model.predict(val_input)
         
         print('Stopped epoch: ', self.earlystop.stopped_epoch)
@@ -326,14 +326,14 @@ class PcT_BERT():
                        class_weight=None 
                        )
 
-  def predict(self, val_pd):
+  def predict(self, val_pd, text_to_encode_parent, text_to_encode_target):
         #with self.session.as_default():
 
         #encode parent 
-        parent_val_input = self.to_bert_input(val_pd, text_to_encode="parent")
+        parent_val_input = self.to_bert_input(val_pd, text_to_encode_parent="parent")
 
         #encode target
-        val_input = self.to_bert_input(val_pd, text_to_encode="text")
+        val_input = self.to_bert_input(val_pd, text_to_encode_target="text")
         predictions = self.model.predict(list(parent_val_input) + list(val_input))
         print('Stopped epoch: ', self.earlystop.stopped_epoch)
         if self.save_predictions:
