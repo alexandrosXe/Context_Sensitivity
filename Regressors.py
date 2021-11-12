@@ -84,7 +84,7 @@ class BERT_MLP():
         elif text_to_encode == 'parent':
           sentences = sentences.parent
         else:
-          print("Text to encode must be text (target) or parent")
+          sentences = sentences[text_to_encode]
         for sentence in tqdm(sentences):
             inputs = self.tokenizer.encode_plus(sentence, add_special_tokens=True, max_length=self.max_seq_length, pad_to_max_length=True, 
                                                   return_attention_mask=True, return_token_type_ids=True)
@@ -240,7 +240,7 @@ class PcT_BERT():
       elif text_to_encode == 'parent':
         sentences = sentences.parent
       else:
-        print("Text to encode must be text (target) or parent")
+        sentences = sentences[text_to_encode]
       for sentence in tqdm(sentences):
           inputs = self.tokenizer.encode_plus(sentence, add_special_tokens=True, max_length=self.max_seq_length, pad_to_max_length=True, 
                                               return_attention_mask=True, return_token_type_ids=True)
